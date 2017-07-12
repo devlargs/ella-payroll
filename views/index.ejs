@@ -3,9 +3,72 @@
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   </head>
-  <body>
+  <body >
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
+
+    <form>
+      <input type="text" placeholder="enter name" id="name"/><Br>
+      <input type="email" placeholder="enter email" id="email"/>
+    </form>
+
+    <button onClick="addUser(document.getElementById('name').value, document.getElementById('email').value)">Add user</button>
+
+    <hr/>
+
+    <div id="tangina"></div>
+
   </body>
+  <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
+  <script>
+
+   
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyC-BLCKDrb2Xpwe_AeMh7uYE9pP46MtwkU",
+      authDomain: "ella-payroll.firebaseapp.com",
+      databaseURL: "https://ella-payroll.firebaseio.com",
+      projectId: "ella-payroll",
+      storageBucket: "ella-payroll.appspot.com",
+      messagingSenderId: "322735661027"
+    };
+    firebase.initializeApp(config);
+
+    var users = firebase.database().ref('users');
+
+    users.on("value", function(data){
+      // console.log(data.val())
+      var arrays = data.val();
+      var iterate = Object.keys(data.val());
+      console.log(iterate)
+      var la = "";
+
+      iterate.map(function(key){
+        la += "<li>" + data.val()[key].email + "</li>";
+      });
+
+      $("#tangina").html(la)
+
+    })
+
+    function addUser(name, email){
+      console.log(name)
+      console.log(email)
+
+      users.push({
+        email: email,
+        username: name,
+      }, function(snapshot){
+        console.log(snapshot)
+      })
+    }
+
+    function removeUser(id){
+      users.remove(id)
+    }
+    
+  </script>
+
 </html>
