@@ -12,6 +12,7 @@
     <form>
       <input type="text" placeholder="enter name" id="name"/><Br>
       <input type="email" placeholder="enter email" id="email"/>
+      <input type="file" value="upload" id="uploadBtn"/>
     </form>
 
     <button onClick="addUser(document.getElementById('name').value, document.getElementById('email').value)">Add user</button>
@@ -68,6 +69,25 @@
     function removeUser(id){
       users.remove(id)
     }
+
+    var storage = firebase.storage();
+    var uploadBtn = document.getElementById("uploadBtn");
+
+    uploadBtn.addEventListener("change", function(e){
+      var file = e.target.files[0];
+
+      var storageRef = storage.ref('users/' + file.name);
+
+      var task = storageRef.put(file);
+
+      task.on("state_changed", function complete(snapshot){
+        console.log(snapshot)
+      }, function error(snapshot){
+        console.log(snapshot)
+      })
+    
+    })
+
     
   </script>
 
