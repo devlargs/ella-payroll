@@ -18,9 +18,9 @@ render(<App/>, document.getElementById('root'));*/
 
 switch(__page){
     case 'login' : 
-        require('./pages/login');
+        require('./pages/home/login');
         break;
-    case 'page1' : 
-        require('./pages/page1');
+    case 'blank' : 
+        require('./pages/admin/blank');
         break;
 }
