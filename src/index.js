@@ -1,5 +1,3 @@
-var app = require('./functions');
-
 switch(__page){
     case 'login' : 
         require('./pages/home/login');
