@@ -1,9 +1,9 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { firebase } from '../../../models/config';
+import { firebase, checkUser } from '../../../auth';
 
 class App extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
@@ -12,14 +12,28 @@ class App extends React.Component {
         }
     }
 
-    onLogin(email, password){
+    componentDidMount(){
+        checkUser();
+    }
+
+    onLogin(email, password) {
         const auth = firebase.auth();
 
-        auth.signInWithEmailAndPassword(email, password).then(function(res){
+        auth.signInWithEmailAndPassword(email, password).then(function (res) {
             toastr.success('Successfully Authenticated!');
-        }).catch(function(err){
+        }).catch(function (err) {
             toastr.error(err.message)
         })
+    }
+
+    onSignOut() {
+        const auth = firebase.auth();
+
+        auth.signOut().then(function () {
+            toastr.success("Successfully Logout")
+        }).catch(function (error) {
+            toastr.error(error);
+        });
     }
 
     render() {
@@ -45,7 +59,8 @@ class App extends React.Component {
                         <div className="col-xs-8">
                         </div>
                         <div className="col-xs-4">
-                            <button className="btn btn-primary btn-block btn-flat" onClick={() => this.onLogin(this.state.username, this.state.password)}>Sign In</button>
+                            <button className="btn btn-primary btn-block btn-flat" onClick={() => this.onLogin(this.state.username, this.state.password)}>Sign In </button>
+                            <button className="btn btn-primary btn-block btn-flat" onClick={() => this.onSignOut()}>Logout</button>
                         </div>
                     </div>
                 </div>

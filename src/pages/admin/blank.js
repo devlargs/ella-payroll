@@ -1,13 +1,20 @@
 import React from 'react';
 import { render } from 'react-dom';
+import { firebase, checkUser} from '../../../auth';
 
 class App extends React.Component{
+    onSubmitData(){
+        var currentUser = checkUser();
+        console.log(currentUser)
+    }
+
     render(){
+        this.onSubmitData();
         return (
             <div>
                 <section className="content-header">
                 <h1>
-                    Blank page
+                    Blank pagesss
                     <small>it all starts here</small>
                 </h1>
                 <ol className="breadcrumb">

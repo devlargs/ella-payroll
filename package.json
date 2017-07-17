@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "webpack && nodemon"
+    "dev": "webpack --watch & nodemon ./bin/www"
   },
   "dependencies": {
     "admin-lte": "^2.3.11",
