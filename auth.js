@@ -10,11 +10,23 @@ module.exports.firebase = firebase.initializeApp({
 });
 
 module.exports.checkUser = function () {
-    firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
-            return user;
-        } else {
-            return null;
-        }
-    });
+    function check() {
+        return new Promise((resolve, reject) => {
+            firebase.auth().onAuthStateChanged(function (user) {
+                if (user) {
+                    resolve(user)
+                } else {
+                    reject(user)
+                }
+            });
+        })
+    }
+
+    check().then(function(res){
+        return res;
+    }).catch(function(ex){
+        return ex;
+    })
+
+
 }
