@@ -3,12 +3,44 @@ import { render } from 'react-dom';
 import { firebase, checkUser } from '../../../settings';
 
 class App extends React.Component {
+    constructor(){
+        super();
 
-    componentDidMount(){
+        this.state = {
+            users: {}
+        }
+    }
+
+    componentDidMount() {
         checkUser();
+        var database = firebase.database().ref('usersInfo');
+        database.on('value', function (snap) {
+            console.log(snap.val())
+        })
+
+    }
+
+    database() {
+        var database = firebase.database().ref('usersInfo');
+
+        database.child('test').set({
+            d: 'da'
+        })
+
+        database.child('tanginanyo').set({
+            d: 'da'
+        })
+
+        // database.child("random").setValue({
+        //     name: 'Gago ka ba',
+        //     sex: 'f'
+        // })
+
+
     }
 
     render() {
+        var self = this;
         return (
             <div>
                 <section className="content-header">
@@ -16,11 +48,6 @@ class App extends React.Component {
                         Shantidope
                     <small>it all starts here</small>
                     </h1>
-                    <ol className="breadcrumb">
-                        <li><a href="#"><i className="fa fa-dashboard"></i> Home</a></li>
-                        <li><a href="#">Examples</a></li>
-                        <li className="active">Blank page</li>
-                    </ol>
                 </section>
 
                 <section className="content">
@@ -37,7 +64,7 @@ class App extends React.Component {
                             </div>
                         </div>
                         <div className="box-body">
-                            Start creating your amazing application!
+                            <button onClick={self.database}>Test</button>
                         </div>
                         <div className="box-footer">
                             Footer

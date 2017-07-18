@@ -15,9 +15,9 @@ module.exports.checkUser = function () {
 
     if (localStorage.getItem(hashUser)) {
         var a = JSON.parse(localStorage.getItem(hashUser));
-        if(location.pathname == '/'){
+        if (location.pathname == '/') {
             location.href = "/dashboard";
-        }else{
+        } else {
             $("body").show();
             $('.signOut').click(function () {
                 const auth = firebase.auth();
@@ -39,7 +39,7 @@ module.exports.checkUser = function () {
             $("body").show();
             setTimeout(function () { toastr.success("Redirecting..."); }, 500);
             setTimeout(function () { location.href = "/"; }, 2500);
-        }else{
+        } else {
             $("body").show();
         }
     }
