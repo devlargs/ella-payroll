@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { firebase, checkUser } from '../../../auth';
+import { firebase, hashUser } from '../../../settings';
 
 class App extends React.Component {
     constructor(props) {
@@ -13,7 +13,15 @@ class App extends React.Component {
     }
 
     componentDidMount(){
-        checkUser();
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user) {
+                localStorage.setItem(hashUser, JSON.stringify(user))
+                location.href = "/blank"
+            } else {
+                console.log("No user logged")
+                localStorage.clear();
+            }
+        });
     }
 
     onLogin(email, password) {
@@ -21,6 +29,9 @@ class App extends React.Component {
 
         auth.signInWithEmailAndPassword(email, password).then(function (res) {
             toastr.success('Successfully Authenticated!');
+            setTimeout(function(){
+                location.href = "/blank";
+            }, 2000)
         }).catch(function (err) {
             toastr.error(err.message)
         })
@@ -60,7 +71,7 @@ class App extends React.Component {
                         </div>
                         <div className="col-xs-4">
                             <button className="btn btn-primary btn-block btn-flat" onClick={() => this.onLogin(this.state.username, this.state.password)}>Sign In </button>
-                            <button className="btn btn-primary btn-block btn-flat" onClick={() => this.onSignOut()}>Logout</button>
+                            {/*<button className="btn btn-primary btn-block btn-flat" onClick={() => this.onSignOut()}>Logout</button>*/}
                         </div>
                     </div>
                 </div>

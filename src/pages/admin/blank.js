@@ -1,42 +1,60 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { firebase, checkUser} from '../../../auth';
+import { firebase, signOut } from '../../../settings';
 
-class App extends React.Component{
-    render(){
-        console.log(checkUser())
+class App extends React.Component {
+    componentDidMount() {
+        console.log("nak ng puta")
+
+        setTimeout(function(){
+        signOut()
+            
+        }, 2000 )
+
+        //    firebase.auth().onAuthStateChanged(function(user){
+        //        if(!user){
+        //            console.log(user)
+        //        } else {
+        //            toastr.error("No user is logged in. Redirecting to Login page....")
+        //            location.href = "/"
+        //        }
+        //    })
+        // console.log(checkUser  
+    }
+
+    render() {
         return (
             <div>
                 <section className="content-header">
-                <h1>
-                    Shantidope
+                    <h1>
+                        Shantidope
                     <small>it all starts here</small>
-                </h1>
-                <ol className="breadcrumb">
-                    <li><a href="#"><i className="fa fa-dashboard"></i> Home</a></li>
-                    <li><a href="#">Examples</a></li>
-                    <li className="active">Blank page</li>
-                </ol>  
+                    </h1>
+                    <ol className="breadcrumb">
+                        <li><a href="#"><i className="fa fa-dashboard"></i> Home</a></li>
+                        <li><a href="#">Examples</a></li>
+                        <li className="active">Blank page</li>
+                    </ol>
                 </section>
 
                 <section className="content">
 
-                <div className="box">
-                    <div className="box-header with-border">
-                        <h3 className="box-title">Title</h3>
+                    <div className="box">
+                        <div className="box-header with-border">
+                            <h3 className="box-title">Title</h3>
 
-                        <div className="box-tools pull-right">
-                            <button type="button" className="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                    <i className="fa fa-minus"></i></button>
-                            <button type="button" className="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-                    <i className="fa fa-times"></i></button>
-                        </div>
+                            <div className="box-tools pull-right">
+                                <button type="button" className="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                    <i className="fa fa-minus"></i></button>
+                                <button type="button" className="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+                                    <i className="fa fa-times"></i></button>
+                            </div>
                         </div>
                         <div className="box-body">
-                        Start creating your amazing application!
+                            Start creating your amazing application!
                         </div>
                         <div className="box-footer">
-                        Footer
+                            Footer
                         </div>
                     </div>
                 </section>
@@ -45,4 +63,4 @@ class App extends React.Component{
     }
 }
 
-render(<App/>, document.getElementById('root'));
+render(<App />, document.getElementById('root'));
