@@ -58,7 +58,7 @@ class App extends React.Component {
         }).catch(function(error) {
             toastr.error(error.message);
             self.setState({
-                view: 'view',
+                view: 'add',
                 username: '',
                 password: '',
                 firstName: '',
@@ -109,6 +109,7 @@ class App extends React.Component {
                                     <div className="box-body table-responsive no-padding">
                                         <table className="table table-hover">
                                             <tbody><tr>
+                                                <th></th>
                                                 <th>Email</th>
                                                 <th>User</th>
                                             </tr>
@@ -116,6 +117,9 @@ class App extends React.Component {
                                                     Object.keys(self.state.users).map(function(key, idx){
                                                         return(
                                                             <tr key={key}>
+                                                                <td>
+                                                                    <img className="img-circle img" style={{width: 40, height: 40}} src={self.state.users[key].photoUrl}/> 
+                                                                </td>
                                                                 <td>{self.state.users[key].email}</td>
                                                                 <td>{self.state.users[key].displayName}</td>
                                                             </tr>
