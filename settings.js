@@ -44,3 +44,7 @@ module.exports.checkUser = function () {
         }
     }
 }
+
+module.exports.images = {
+    user: 'https://firebasestorage.googleapis.com/v0/b/ella-payroll.appspot.com/o/users%2Fdefault-user.png?alt=media&token=364f8cc4-63f3-4144-b010-da270d546eba'
+}

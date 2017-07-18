@@ -1,34 +1,26 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { firebase, checkUser, hashUser } from '../../settings';
+import ButtonLoad from './components/buttonLoading';
 
 class App extends React.Component {
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
 
         this.state = {
             username: '',
-            password: ''
+            password: '',
+            loginLoading: false
         }
     }
 
     componentDidMount() {
         checkUser();
-        // firebase.auth().onAuthStateChanged(function (user) {
-        //     if (user) {
-        //         toastr.success('User is currently logged in!');
-        //         setTimeout(function () {
-        //             localStorage.setItem(hashUser, JSON.stringify(user));
-        //             location.href = "/dashboard";
-        //         }, 2000)
-        //     } else {
-        //         console.log("No user logged")
-        //         localStorage.clear();
-        //     }
-        // });
     }
 
     onLogin(email, password) {
+        var self = this;
+        self.setState({ loginLoading : true });
         const auth = firebase.auth();
         auth.signInWithEmailAndPassword(email, password).then(function (res) {
             toastr.success('Successfully Logged In!');
@@ -36,8 +28,8 @@ class App extends React.Component {
                 localStorage.setItem(hashUser, JSON.stringify(res));
                 location.href = "/dashboard";
             }, 2000)
-            
         }).catch(function (err) {
+            self.setState({ loginLoading : false });
             toastr.error(err.message)
         })
     }
@@ -75,8 +67,13 @@ class App extends React.Component {
                         <div className="col-xs-8">
                         </div>
                         <div className="col-xs-4">
-                            <button className="btn btn-primary btn-block btn-flat" onClick={() => this.onLogin(this.state.username, this.state.password)}>Sign In </button>
-                            {/*<button className="btn btn-primary btn-block btn-flat" onClick={() => this.onSignOut()}>Logout</button>*/}
+                            {
+                                (!this.state.loginLoading) ?
+                                <button className="btn btn-primary btn-block btn-flat" onClick={() => this.onLogin(this.state.username, this.state.password)}>Sign In </button> :
+                                <ButtonLoad />
+                            }
+
+                            
                         </div>
                     </div>
                 </div>

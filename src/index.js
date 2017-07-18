@@ -1,5 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
+
 import Navbar from './pages/components/navbar';
 import LeftSideBar from './pages/components/leftSidebar';
 import Footer from './pages/components/footer';

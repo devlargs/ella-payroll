@@ -1,8 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
 
-<%- include('templates/header') %>
+<head>
+  <meta charset="UTF-8">
+  <title>Ella Payroll</title>
+  <link type="text/css" rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css" />
+  <link type="text/css" rel="stylesheet" href="/bootstrap/dist/css/bootstrap-theme.min.css" />
+  <link type="text/css" rel="stylesheet" href="/admin-lte/dist/css/AdminLTE.min.css" />
+  <link type="text/css" rel="stylesheet" href="/admin-lte/dist/css/skins/_all-skins.min.css" />
+  <link type="text/css" rel="stylesheet" href="/font-awesome/css/font-awesome.min.css" />
+  <link type="text/css" rel="stylesheet" href="/toastr/build/toastr.min.css" />
+</head>
 
 <body class="<%- classNames %>">
   <div id="root"></div>
 </body>
 
-<%- include('templates/footer') %>
+<script type="text/javascript" src="/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/toastr/build/toastr.min.js"></script>
+<script type="text/javascript" src="/admin-lte/dist/js/app.min.js"></script>
+<script>
+  var __page = '<%= page %>';
+  toastr.options.preventDuplicates = true;
+</script>
+<script src="./script.min.js"></script>
+</html>

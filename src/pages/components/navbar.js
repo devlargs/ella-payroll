@@ -1,4 +1,5 @@
 import React from 'react';
+import { images } from '../../../settings';
 
 class  Navbar extends React.Component {
     render(){
@@ -32,7 +33,7 @@ class  Navbar extends React.Component {
                                 <li>
                                     <a href="#">
                                     <div className="pull-left">
-                                        <img src="https://firebasestorage.googleapis.com/v0/b/ella-payroll.appspot.com/o/users%2Fprofile-img.png?alt=media&token=9ee171b0-56dd-4709-94db-5945083a739c" className="img-circle" alt="User Image"/>
+                                        <img src={images.user} className="img-circle" alt="User Image"/>
                                     </div>
                                     <h4>
                                         Support Team
@@ -96,12 +97,12 @@ class  Navbar extends React.Component {
                         </li>
                         <li className="dropdown user user-menu">
                             <a href="#" className="dropdown-toggle" data-toggle="dropdown">
-                            <img src="https://firebasestorage.googleapis.com/v0/b/ella-payroll.appspot.com/o/users%2Fprofile-img.png?alt=media&token=9ee171b0-56dd-4709-94db-5945083a739c" className="user-image" alt="User Image" />
+                            <img src={images.user} className="user-image" alt="User Image" />
                             <span className="hidden-xs">Alexander Pierce</span>
                             </a>
                             <ul className="dropdown-menu">
                             <li className="user-header">
-                                <img src="https://firebasestorage.googleapis.com/v0/b/ella-payroll.appspot.com/o/users%2Fprofile-img.png?alt=media&token=9ee171b0-56dd-4709-94db-5945083a739c" className="img-circle" alt="User Image"/>
+                                <img src={images.user} className="img-circle" alt="User Image"/>
 
                                 <p>
                                 Alexander Pierce - Web Developer
