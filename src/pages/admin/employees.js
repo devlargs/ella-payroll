@@ -21,16 +21,20 @@ class App extends React.Component {
         // database.on('value', function (snap) {
         //     console.log(snap.val())
         // })
-
+        // this.createUser();
     }
 
-    createUser(){
-        var email = "test.largo@volenday.com";
+    createUser(e){
+        var a = (Math.random() * 200).toFixed(2)
+        var email = "test." + a + "@volenday.com";
         var password = "programer1234"
 
-        firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+        firebase.auth().createUserWithEmailAndPassword(email, password).then(function(res){
+            console.log(res)
+        }).catch(function(error) {
             console.log(error)
         });
+        e.preventDefault();
     }
 
     render() {
@@ -142,7 +146,7 @@ class App extends React.Component {
                                         </div>
                                         <div className="box-footer">
                                             <button onClick={() => { self.setState({ view: 'view' }) }} className="btn btn-default">Cancel</button>
-                                            <button onClick={() => self.createUser()} className="btn btn-info pull-right">Create User</button>
+                                            <button onClick={(e) => self.createUser(e)} className="btn btn-info pull-right">Create User</button>
                                         </div>
                                     </form>
                                 </div>
