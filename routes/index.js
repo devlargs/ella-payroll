@@ -17,4 +17,12 @@ router.get('/dashboard', function(req, res, next){
   })
 });
 
+router.get('/employees', function(req, res, next){
+  res.render('index', {
+    title: 'Employees',
+    page: 'employees',
+    classNames: 'hold-transition skin-blue sidebar-mini'
+  })
+})
+
 module.exports = router;

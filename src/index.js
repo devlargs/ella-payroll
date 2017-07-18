@@ -5,4 +5,7 @@ switch(__page){
     case 'dashboard' : 
         require('./pages/admin/dashboard');
         break;
+    case 'employees' : 
+        require('./pages/admin/employees');
+        break;
 }
