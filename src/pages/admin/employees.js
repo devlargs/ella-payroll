@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { firebase, checkUser } from '../../../settings';
+import { firebase, checkUser, images } from '../../../settings';
 
 class App extends React.Component {
     constructor() {
@@ -8,7 +8,11 @@ class App extends React.Component {
 
         this.state = {
             view: 'view',
-            users: {}
+            users: {},
+            username: '',
+            password: '',
+            firstName: '',
+            lastName: ''
         }
     }
 
@@ -25,12 +29,21 @@ class App extends React.Component {
     }
 
     createUser(e){
-        var a = (Math.random() * 200).toFixed(2)
-        var email = "test." + a + "@volenday.com";
-        var password = "programer1234"
+        var self = this;
+        var database = firebase.database().ref('usersInfo');
 
-        firebase.auth().createUserWithEmailAndPassword(email, password).then(function(res){
-            console.log(res)
+        firebase.auth().createUserWithEmailAndPassword(self.state.username, self.state.password).then(function(res){
+            if(res){
+                database.child(res.uid).set({
+                    email: res.email,
+                    displayName: self.state.firstName + ' ' + self.state.lastName,
+                    userType: 0,
+                    photoUrl: images.user
+                })
+                console.log(res)
+            }else{
+                throw err;
+            }
         }).catch(function(error) {
             console.log(error)
         });
@@ -121,7 +134,7 @@ class App extends React.Component {
                     {
                         (self.state.view == 'add') &&
                         <div className="row">
-                            <div className="col-md-6 col-lg-6 col-xs-6 col-sm-6">
+                            <div className="col-md-8 col-lg-8 col-xs-8 col-sm-7">
                                 <div className="box box-info">
                                     <div className="box-header with-border">
                                         <h3 className="box-title">Add Employee Form</h3>
@@ -132,14 +145,32 @@ class App extends React.Component {
                                                 <label htmlFor="inputEmail3" className="col-sm-2 control-label">Email</label>
 
                                                 <div className="col-sm-10">
-                                                    <input type="email" className="form-control" id="inputEmail3" placeholder="Email" />
+                                                    <input type="email" className="form-control" id="inputEmail3" placeholder="Email" value={self.state.username} onChange={(e) => self.setState({ username: e.target.value })} />
                                                 </div>
                                             </div>
                                             <div className="form-group">
                                                 <label htmlFor="inputPassword3" className="col-sm-2 control-label">Password</label>
 
                                                 <div className="col-sm-10">
-                                                    <input type="password" className="form-control" id="inputPassword3" placeholder="Password" />
+                                                    <input type="password" className="form-control" id="inputPassword3" placeholder="Password" value={self.state.password} onChange={(e) => self.setState({ password: e.target.value })} />
+                                                </div>
+                                            </div>
+
+                                            <hr/>
+
+                                            <div className="form-group">
+                                                <label htmlFor="firstName" className="col-sm-2 control-label">First Name</label>
+
+                                                <div className="col-sm-10">
+                                                    <input type="text" className="form-control" id="firstName" placeholder="First Name" value={self.state.firstName} onChange={(e) => self.setState({ firstName: e.target.value })} />
+                                                </div>
+                                            </div>
+
+                                            <div className="form-group">
+                                                <label htmlFor="lastName" className="col-sm-2 control-label">Last Name</label>
+
+                                                <div className="col-sm-10">
+                                                    <input type="text" className="form-control" id="lastName" placeholder="Last Name" value={self.state.lastName} onChange={(e) => self.setState({ lastName: e.target.value })} />
                                                 </div>
                                             </div>
 
