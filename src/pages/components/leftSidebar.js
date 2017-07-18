@@ -2,6 +2,11 @@ import React from 'react';
 import { images } from '../../../settings';
 
 class LeftSideBar extends React.Component{
+    componentDidMount(){
+        var element = document.getElementById("li-" + __page);
+        element.classList.add("active");
+    }
+
     render(){
         return (
             <aside className="main-sidebar">
@@ -18,10 +23,23 @@ class LeftSideBar extends React.Component{
 
                     <ul className="sidebar-menu" data-widget="tree">
                         <li className="header">MAIN NAVIGATION</li>
-                        <li className="active"><a><i className="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-                        <li><a><i className="fa fa-user"></i> <span>Employees</span></a></li>
-                        <li><a><i className="fa fa-calendar"></i> <span>Calendar</span></a></li>
-                        <li><a><i className="fa fa-table"></i> <span>Tax Table</span></a></li>
+
+                        
+                        <li id="li-dashboard">
+                            <a href="/dashboard"><i className="fa fa-dashboard"></i> <span>Dashboard</span></a>
+                        </li>
+                        
+                        <li id="li-employees">
+                            <a href="/employees"><i className="fa fa-user"></i> <span>Employees</span></a>
+                        </li>
+                        
+                        <li id="li-calendar">
+                            <a href="/calendar"><i className="fa fa-calendar"></i> <span>Calendar</span></a>
+                        </li>
+                        
+                        <li id="li-taxTable">
+                            <a href="/taxTable"><i className="fa fa-table"></i> <span>Tax Table</span></a>
+                        </li>
                     </ul>
                 </section>
             </aside>
