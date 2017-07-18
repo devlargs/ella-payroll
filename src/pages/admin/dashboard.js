@@ -1,25 +1,11 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { firebase, signOut } from '../../../settings';
+import { firebase, checkUser } from '../../../settings';
 
 class App extends React.Component {
-    componentDidMount() {
-        console.log("nak ng puta")
 
-        setTimeout(function(){
-        signOut()
-            
-        }, 2000 )
-
-        //    firebase.auth().onAuthStateChanged(function(user){
-        //        if(!user){
-        //            console.log(user)
-        //        } else {
-        //            toastr.error("No user is logged in. Redirecting to Login page....")
-        //            location.href = "/"
-        //        }
-        //    })
-        // console.log(checkUser  
+    componentDidMount(){
+        checkUser();
     }
 
     render() {

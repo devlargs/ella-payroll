@@ -9,10 +9,10 @@ router.get('/', function(req, res, next) {
   });
 });
 
-router.get('/blank', function(req, res, next){
+router.get('/dashboard', function(req, res, next){
   res.render('index',{
-    title: 'Blank',
-    page: 'blank',
+    title: 'Dashboard',
+    page: 'dashboard',
     classNames: 'hold-transition skin-blue sidebar-mini'
   })
 });

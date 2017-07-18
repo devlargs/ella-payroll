@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { firebase, hashUser } from '../../../settings';
+import { firebase, checkUser, hashUser } from '../../../settings';
 
 class App extends React.Component {
     constructor(props) {
@@ -12,26 +12,31 @@ class App extends React.Component {
         }
     }
 
-    componentDidMount(){
-        firebase.auth().onAuthStateChanged(function (user) {
-            if (user) {
-                localStorage.setItem(hashUser, JSON.stringify(user))
-                location.href = "/blank"
-            } else {
-                console.log("No user logged")
-                localStorage.clear();
-            }
-        });
+    componentDidMount() {
+        checkUser();
+        // firebase.auth().onAuthStateChanged(function (user) {
+        //     if (user) {
+        //         toastr.success('User is currently logged in!');
+        //         setTimeout(function () {
+        //             localStorage.setItem(hashUser, JSON.stringify(user));
+        //             location.href = "/dashboard";
+        //         }, 2000)
+        //     } else {
+        //         console.log("No user logged")
+        //         localStorage.clear();
+        //     }
+        // });
     }
 
     onLogin(email, password) {
         const auth = firebase.auth();
-
         auth.signInWithEmailAndPassword(email, password).then(function (res) {
-            toastr.success('Successfully Authenticated!');
-            setTimeout(function(){
-                location.href = "/blank";
+            toastr.success('Successfully Logged In!');
+            setTimeout(function () {
+                localStorage.setItem(hashUser, JSON.stringify(res));
+                location.href = "/dashboard";
             }, 2000)
+            
         }).catch(function (err) {
             toastr.error(err.message)
         })
