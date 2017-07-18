@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { firebase, checkUser, images } from '../../../settings';
+import ButtonLoad from '../components/buttonLoading';
 
 class App extends React.Component {
     constructor() {
@@ -12,25 +13,27 @@ class App extends React.Component {
             username: '',
             password: '',
             firstName: '',
-            lastName: ''
+            lastName: '',
+            usersLoading: false
         }
     }
 
     componentDidMount() {
         checkUser();
-        // firebase.auth().createUserWithEmailAndPassword("ralph.largo@volenday.com", "programer1234").catch(function(error) {
-        //     console.log(error)
-        // });
-        // var database = firebase.database().ref('usersInfo');
-        // database.on('value', function (snap) {
-        //     console.log(snap.val())
-        // })
-        // this.createUser();
+        var self = this;
+        var database = firebase.database().ref('usersInfo');
+        database.on('value', function (snap) {
+            console.log(snap.val())
+            self.setState({
+                users: snap.val()
+            })
+        })
     }
 
     createUser(e){
         var self = this;
         var database = firebase.database().ref('usersInfo');
+        self.setState({ usersLoading : true });
 
         firebase.auth().createUserWithEmailAndPassword(self.state.username, self.state.password).then(function(res){
             if(res){
@@ -40,12 +43,28 @@ class App extends React.Component {
                     userType: 0,
                     photoUrl: images.user
                 })
-                console.log(res)
+                toastr.success('Successfully added');
+                self.setState({
+                    view: 'view',
+                    username: '',
+                    password: '',
+                    firstName: '',
+                    lastName: '',
+                    usersLoading: false
+                })
             }else{
                 throw err;
             }
         }).catch(function(error) {
-            console.log(error)
+            toastr.error(error.message);
+            self.setState({
+                view: 'view',
+                username: '',
+                password: '',
+                firstName: '',
+                lastName: '',
+                usersLoading: false
+            })
         });
         e.preventDefault();
     }
@@ -90,40 +109,20 @@ class App extends React.Component {
                                     <div className="box-body table-responsive no-padding">
                                         <table className="table table-hover">
                                             <tbody><tr>
-                                                <th>ID</th>
+                                                <th>Email</th>
                                                 <th>User</th>
-                                                <th>Date</th>
-                                                <th>Status</th>
-                                                <th>Reason</th>
                                             </tr>
-                                                <tr>
-                                                    <td>183</td>
-                                                    <td>John Doe</td>
-                                                    <td>11-7-2014</td>
-                                                    <td><span className="label label-success">Approved</span></td>
-                                                    <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>219</td>
-                                                    <td>Alexander Pierce</td>
-                                                    <td>11-7-2014</td>
-                                                    <td><span className="label label-warning">Pending</span></td>
-                                                    <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>657</td>
-                                                    <td>Bob Doe</td>
-                                                    <td>11-7-2014</td>
-                                                    <td><span className="label label-primary">Approved</span></td>
-                                                    <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>175</td>
-                                                    <td>Mike Doe</td>
-                                                    <td>11-7-2014</td>
-                                                    <td><span className="label label-danger">Denied</span></td>
-                                                    <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                                                </tr>
+                                                {
+                                                    Object.keys(self.state.users).map(function(key, idx){
+                                                        return(
+                                                            <tr key={key}>
+                                                                <td>{self.state.users[key].email}</td>
+                                                                <td>{self.state.users[key].displayName}</td>
+                                                            </tr>
+                                                        )
+                                                    })
+                                                }
+
                                             </tbody></table>
                                     </div>
                                 </div>
@@ -134,7 +133,7 @@ class App extends React.Component {
                     {
                         (self.state.view == 'add') &&
                         <div className="row">
-                            <div className="col-md-8 col-lg-8 col-xs-8 col-sm-7">
+                            <div className="col-md-9 col-lg-8 col-xs-12 col-sm-12">
                                 <div className="box box-info">
                                     <div className="box-header with-border">
                                         <h3 className="box-title">Add Employee Form</h3>
@@ -177,7 +176,13 @@ class App extends React.Component {
                                         </div>
                                         <div className="box-footer">
                                             <button onClick={() => { self.setState({ view: 'view' }) }} className="btn btn-default">Cancel</button>
-                                            <button onClick={(e) => self.createUser(e)} className="btn btn-info pull-right">Create User</button>
+
+                                            {
+                                                (!self.state.usersLoading) ?
+                                                <button onClick={(e) => self.createUser(e)} className="btn btn-info pull-right">Create Employee</button>:
+                                                <ButtonLoad/>
+                                            }
+                                            
                                         </div>
                                     </form>
                                 </div>
