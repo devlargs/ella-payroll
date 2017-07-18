@@ -4,3 +4,4 @@ dist/
 dist/*.min.js
 dist/*.css
 dist/tmp/**/*
+dist/script.min.js
