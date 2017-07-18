@@ -1,40 +1,8 @@
-<!--<%- include('templates/header') %>
+
+<%- include('templates/header') %>
 
 <body class="<%- classNames %>">
   <div id="root"></div>
 </body>
 
-<%- include('templates/footer') %>-->
-
-<%- include('templates/header') %>
-
-  <%if (page == "login") { %>
-
-    <body class="<%- classNames %>">
-      <div id="root"></div>
-    </body>
-    <% } else { %>
-
-      <body class="<%- classNames %>">
-        <!-- Site wrapper -->
-        <div class="wrapper">
-          <%- include('templates/admin/navbar') %>
-            <%- include('templates/admin/left-sidebar') %>
-
-              <div id="root" class="content-wrapper"></div>
-              <!-- /.content-wrapper -->
-              <%- include('templates/admin/footer') %>
-
-
-                <!-- Control Sidebar -->
-                <%- include('templates/admin/left-sidebar') %>
-                  <!-- /.control-sidebar -->
-                  <!-- Add the sidebar's background. This div must be placed
-       immediately after the control sidebar -->
-                  <div class="control-sidebar-bg"></div>
-        </div>
-      </body>
-
-      <% } %>
-
-      <%- include('templates/footer') %>
+<%- include('templates/footer') %>

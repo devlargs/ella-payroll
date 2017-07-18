@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { firebase, checkUser, hashUser } from '../../../settings';
+import { firebase, checkUser, hashUser } from '../../settings';
 
 class App extends React.Component {
     constructor(props) {
@@ -85,4 +85,4 @@ class App extends React.Component {
     }
 }
 
-render(<App />, document.getElementById('root'));
+module.exports = App;
