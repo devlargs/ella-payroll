@@ -108,9 +108,8 @@ class App extends React.Component {
                                         </div>
                                     </div>
                                     <div className="box-body table-responsive no-padding">
-                                        <table className="table table-hover">
+                                        <table className="table table-bordered">
                                             <tbody><tr>
-                                                <th></th>
                                                 <th>Email</th>
                                                 <th>User</th>
                                             </tr>
@@ -121,9 +120,6 @@ class App extends React.Component {
                                                     Object.keys(self.state.users).map(function(key, idx){
                                                         return(
                                                             <tr key={key}>
-                                                                <td>
-                                                                    <img className="img-circle img" style={{width: 30, height: 30}} src={self.state.users[key].photoUrl}/> 
-                                                                </td>
                                                                 <td>{self.state.users[key].email}</td>
                                                                 <td>{self.state.users[key].displayName}</td>
                                                             </tr>
