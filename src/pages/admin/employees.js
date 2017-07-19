@@ -111,7 +111,8 @@ class App extends React.Component {
                                         <table className="table table-bordered">
                                             <tbody><tr>
                                                 <th>Email</th>
-                                                <th>User</th>
+                                                <th>Employee Name</th>
+                                                <th>Actions</th>
                                             </tr>
                                                 {
                                                     (Object.keys(self.state.users).length == 0) ?
@@ -122,6 +123,10 @@ class App extends React.Component {
                                                             <tr key={key}>
                                                                 <td>{self.state.users[key].email}</td>
                                                                 <td>{self.state.users[key].displayName}</td>
+                                                                <td>
+                                                                    <button className="btn btn-mr-5 btn-success btn-xs">View</button>
+                                                                    <button className="btn btn-mr-5 btn-danger btn-xs">Remove</button>
+                                                                </td>
                                                             </tr>
                                                         )
                                                     })
