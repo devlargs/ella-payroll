@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start" : "webpack --watch & nodemon ./bin/www",
+    "heroku-postbuild" : "webpack",
     "dev": "webpack --watch & nodemon ./bin/www"
   },
   "dependencies": {
