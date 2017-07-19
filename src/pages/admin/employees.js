@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { firebase, checkUser, images } from '../../../settings';
 import ButtonLoad from '../components/buttonLoading';
+import TableLoading from '../components/tableLoading';
 
 class App extends React.Component {
     constructor() {
@@ -22,8 +23,8 @@ class App extends React.Component {
         checkUser();
         var self = this;
         var database = firebase.database().ref('usersInfo');
+
         database.on('value', function (snap) {
-            console.log(snap.val())
             self.setState({
                 users: snap.val()
             })
@@ -79,7 +80,7 @@ class App extends React.Component {
                         <small>
                             {
                                 (self.state.view == 'view') &&
-                                <a onClick={() => { this.setState({ view: 'add' }) }}>+Add new user</a>
+                                <a onClick={() => { this.setState({ view: 'add' }) }}>+Add new </a>
                             }
 
                         </small>
@@ -94,7 +95,7 @@ class App extends React.Component {
                             <div className="col-xs-12">
                                 <div className="box">
                                     <div className="box-header">
-                                        <h3 className="box-title">Responsive Hover Table</h3>
+                                        <h3 className="box-title">List of Employees</h3>
 
                                         <div className="box-tools">
                                             <div className="input-group input-group-sm" style={{ "width": 150 }}>
@@ -114,11 +115,14 @@ class App extends React.Component {
                                                 <th>User</th>
                                             </tr>
                                                 {
+                                                    (Object.keys(self.state.users).length == 0) ?
+                                                    <TableLoading colSpan={3}/> : 
+
                                                     Object.keys(self.state.users).map(function(key, idx){
                                                         return(
                                                             <tr key={key}>
                                                                 <td>
-                                                                    <img className="img-circle img" style={{width: 40, height: 40}} src={self.state.users[key].photoUrl}/> 
+                                                                    <img className="img-circle img" style={{width: 30, height: 30}} src={self.state.users[key].photoUrl}/> 
                                                                 </td>
                                                                 <td>{self.state.users[key].email}</td>
                                                                 <td>{self.state.users[key].displayName}</td>
@@ -126,8 +130,8 @@ class App extends React.Component {
                                                         )
                                                     })
                                                 }
-
-                                            </tbody></table>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -184,7 +188,7 @@ class App extends React.Component {
                                             {
                                                 (!self.state.usersLoading) ?
                                                 <button onClick={(e) => self.createUser(e)} className="btn btn-info pull-right">Create Employee</button>:
-                                                <ButtonLoad/>
+                                                <ButtonLoad classNames={"btn btn-info pull-right"}/>
                                             }
                                             
                                         </div>

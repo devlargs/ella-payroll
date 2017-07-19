@@ -70,7 +70,7 @@ class App extends React.Component {
                             {
                                 (!this.state.loginLoading) ?
                                 <button className="btn btn-primary btn-block btn-flat" onClick={() => this.onLogin(this.state.username, this.state.password)}>Sign In </button> :
-                                <ButtonLoad />
+                                <ButtonLoad classNames={"btn btn-primary btn-block btn-flat"} />
                             }
 
                             
