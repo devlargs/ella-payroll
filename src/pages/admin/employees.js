@@ -15,7 +15,7 @@ class App extends React.Component {
             password: '',
             firstName: '',
             lastName: '',
-            usersLoading: false
+            usersLoading: true
         }
     }
 
@@ -24,10 +24,14 @@ class App extends React.Component {
         var self = this;
         var database = firebase.database().ref('usersInfo');
 
+        
+
         database.on('value', function (snap) {
-            self.setState({
-                users: snap.val()
-            })
+            if(snap.val() != null){
+                self.setState({ users: snap.val(), usersLoading: false });
+            }else{
+                self.setState({ usersLoading: false });
+            }
         })
     }
 
@@ -60,10 +64,6 @@ class App extends React.Component {
             toastr.error(error.message);
             self.setState({
                 view: 'add',
-                username: '',
-                password: '',
-                firstName: '',
-                lastName: '',
                 usersLoading: false
             })
         });
@@ -109,28 +109,33 @@ class App extends React.Component {
                                     </div>
                                     <div className="box-body table-responsive no-padding">
                                         <table className="table table-bordered">
-                                            <tbody><tr>
-                                                <th>Email</th>
-                                                <th>Employee Name</th>
-                                                <th>Actions</th>
-                                            </tr>
+                                            <tbody>
+                                            
+                                                <tr>
+                                                    <th>Email</th>
+                                                    <th>Employee Name</th>
+                                                    <th>Actions</th>
+                                                </tr>
                                                 {
-                                                    (Object.keys(self.state.users).length == 0) ?
+                                                    (self.state.usersLoading) ?
                                                     <TableLoading colSpan={3}/> : 
 
+                                                    (Object.keys(self.state.users).length == 0) ?
+                                                    <TableLoading colSpan={3} message={"No users found"} /> :
                                                     Object.keys(self.state.users).map(function(key, idx){
-                                                        return(
-                                                            <tr key={key}>
-                                                                <td>{self.state.users[key].email}</td>
+                                                        return (
+                                                            <tr key={idx}>
+                                                                <td>{self.state.users[key].email}</td> 
                                                                 <td>{self.state.users[key].displayName}</td>
                                                                 <td>
-                                                                    <button className="btn btn-mr-5 btn-success btn-xs">View</button>
-                                                                    <button className="btn btn-mr-5 btn-danger btn-xs">Remove</button>
+                                                                    <button className="btn btn-mr-5 btn-success btn-xs">View</button> 
+                                                                    <button className="btn btn-mr-5 btn-danger btn-xs">Remove</button> 
                                                                 </td>
                                                             </tr>
                                                         )
                                                     })
                                                 }
+                                                
                                             </tbody>
                                         </table>
                                     </div>

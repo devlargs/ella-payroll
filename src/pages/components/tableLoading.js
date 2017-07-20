@@ -6,9 +6,13 @@ class TableLoading extends React.Component{
             <tr>
                 <td colSpan={this.props.colSpan}>
                     <center>
-                        <h3>
-                            <span className="fa fa-spinner fa-spin"></span>
-                        </h3>
+                        {
+                            (typeof this.props.message == 'undefined') ? 
+                            <h3>
+                                <span className="fa fa-spinner fa-spin"></span>
+                            </h3> :
+                            <h4>{this.props.message}</h4>
+                        }
                     </center>
                 </td>
             </tr>
