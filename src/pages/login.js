@@ -1,6 +1,5 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { firebase, checkUser, hashUser } from '../../settings';
 import ButtonLoad from './components/buttonLoading';
 
 class App extends React.Component {
@@ -12,36 +11,6 @@ class App extends React.Component {
             password: '',
             loginLoading: false
         }
-    }
-
-    componentDidMount() {
-        checkUser();
-    }
-
-    onLogin(email, password) {
-        var self = this;
-        self.setState({ loginLoading : true });
-        const auth = firebase.auth();
-        auth.signInWithEmailAndPassword(email, password).then(function (res) {
-            toastr.success('Successfully Logged In!');
-            setTimeout(function () {
-                localStorage.setItem(hashUser, JSON.stringify(res));
-                location.href = "/dashboard";
-            }, 2000)
-        }).catch(function (err) {
-            self.setState({ loginLoading : false });
-            toastr.error(err.message)
-        })
-    }
-
-    onSignOut() {
-        const auth = firebase.auth();
-
-        auth.signOut().then(function () {
-            toastr.success("Successfully Logout")
-        }).catch(function (error) {
-            toastr.error(error);
-        });
     }
 
     render() {
@@ -69,10 +38,9 @@ class App extends React.Component {
                         <div className="col-xs-4">
                             {
                                 (!this.state.loginLoading) ?
-                                <button className="btn btn-primary btn-block btn-flat" onClick={() => this.onLogin(this.state.username, this.state.password)}>Sign In </button> :
+                                <button className="btn btn-primary btn-block btn-flat" onClick={() => {location.href = "/dashboard"}}>Sign In </button> :
                                 <ButtonLoad classNames={"btn btn-primary btn-block btn-flat"} />
                             }
-
                             
                         </div>
                     </div>

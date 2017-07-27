@@ -1,5 +1,4 @@
 import React from 'react';
-import { images } from '../../../settings';
 
 class LeftSideBar extends React.Component{
     componentDidMount(){
@@ -13,7 +12,7 @@ class LeftSideBar extends React.Component{
                 <section className="sidebar">
                     <div className="user-panel">
                         <div className="pull-left image">
-                            <img src={images.user} className="img-circle" alt="User Image"/>
+                            <img className="img-circle" alt="User Image"/>
                         </div>
                         <div className="pull-left info">
                             <p>Ralph Largo</p>

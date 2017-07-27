@@ -1,6 +1,5 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { firebase, checkUser, images } from '../../../settings';
 import ButtonLoad from '../components/buttonLoading';
 import TableLoading from '../components/tableLoading';
 
@@ -17,57 +16,6 @@ class App extends React.Component {
             lastName: '',
             usersLoading: true
         }
-    }
-
-    componentDidMount() {
-        checkUser();
-        var self = this;
-        var database = firebase.database().ref('usersInfo');
-
-        
-
-        database.on('value', function (snap) {
-            if(snap.val() != null){
-                self.setState({ users: snap.val(), usersLoading: false });
-            }else{
-                self.setState({ usersLoading: false });
-            }
-        })
-    }
-
-    createUser(e){
-        var self = this;
-        var database = firebase.database().ref('usersInfo');
-        self.setState({ usersLoading : true });
-
-        firebase.auth().createUserWithEmailAndPassword(self.state.username, self.state.password).then(function(res){
-            if(res){
-                database.child(res.uid).set({
-                    email: res.email,
-                    displayName: self.state.firstName + ' ' + self.state.lastName,
-                    userType: 0,
-                    photoUrl: images.user
-                })
-                toastr.success('Successfully added');
-                self.setState({
-                    view: 'view',
-                    username: '',
-                    password: '',
-                    firstName: '',
-                    lastName: '',
-                    usersLoading: false
-                })
-            }else{
-                throw err;
-            }
-        }).catch(function(error) {
-            toastr.error(error.message);
-            self.setState({
-                view: 'add',
-                usersLoading: false
-            })
-        });
-        e.preventDefault();
     }
 
     render() {
@@ -129,7 +77,7 @@ class App extends React.Component {
                                                                 <td>{self.state.users[key].displayName}</td>
                                                                 <td>
                                                                     <button className="btn btn-mr-5 btn-success btn-xs">View</button> 
-                                                                    <button className="btn btn-mr-5 btn-danger btn-xs">Remove</button> 
+                                                                    <button onClick={(e) => self.removeUser(e, key, self.state.users[key].email)} className="btn btn-mr-5 btn-danger btn-xs">Remove</button> 
                                                                 </td>
                                                             </tr>
                                                         )
