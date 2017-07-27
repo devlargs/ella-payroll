@@ -1,26 +1,36 @@
 var express = require('express');
 var router = express.Router();
-var mysql = require('mysql');
-var variables = require('../variables');
+var bookshelf = require('../models/bookshelf');
 
-var connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : 'Z1x2c3V42015',
-  database : 'esl'
-});
+var User = bookshelf.Model.extend({
+  tableName: 'users',
+  info: function(){
+    return this.hasOne(UserInfo)
+  }
+})
 
-connection.connect();
+var UserInfo = bookshelf.Model.extend({
+  tableName: 'user_info',
+  user: function(){
+    return this.belongsTo(User)
+  }
+})
 
-console.log(variables)
-
-router.get('/', function(req, res, next) {
-  connection.query('SELECT * FROM users', function(err, response){
-    res.send({
-        response: response
-    })
+router.get('/user', function(req, res, next) {
+  User.fetchAll().then(function(response){
+    res.send({ status: true, response: response });
+  }).catch(function(error){
+    res.send({ status: false, error})
   })
 });
+
+router.get('/user/:id', function(req, res, next){
+  User.where({ id: req.params.id }).fetch().then(function(response){
+    res.send({ status: true, response });
+  }).catch(function(error){
+    res.send({ status: false, error})
+  })
+})
 
 
 module.exports = router;
