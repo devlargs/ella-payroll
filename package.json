@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "postinstall": "NODE_ENV=production webpack -p",
     "ubuntu": "webpack --watch & nodemon",
     "windows": "webpack --watch & nodemon"
   },
