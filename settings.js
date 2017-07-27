@@ -1,0 +1,1 @@
+module.exports.apiUrl = 'localhost:8080/esl-api/';
