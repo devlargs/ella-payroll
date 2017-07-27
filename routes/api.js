@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
+var variables = require('../variables');
 
 var connection = mysql.createConnection({
   host     : 'localhost',
@@ -11,6 +12,7 @@ var connection = mysql.createConnection({
 
 connection.connect();
 
+console.log(variables)
 
 router.get('/', function(req, res, next) {
   connection.query('SELECT * FROM users', function(err, response){
