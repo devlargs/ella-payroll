@@ -32,7 +32,7 @@ class  Navbar extends React.Component {
                                 <li>
                                     <a href="#">
                                     <div className="pull-left">
-                                        <img className="img-circle" alt="User Image"/>
+                                        <img src="/user.jpeg" className="img-circle" alt="User Image"/>
                                     </div>
                                     <h4>
                                         Support Team
@@ -96,12 +96,12 @@ class  Navbar extends React.Component {
                         </li>
                         <li className="dropdown user user-menu">
                             <a href="#" className="dropdown-toggle" data-toggle="dropdown">
-                            <img  className="user-image" alt="User Image" />
+                            <img src="/user.jpeg" className="user-image" alt="User Image" />
                             <span className="hidden-xs">Alexander Pierce</span>
                             </a>
                             <ul className="dropdown-menu">
                             <li className="user-header">
-                                <img  className="img-circle" alt="User Image"/>
+                                <img src="/user.jpeg" className="img-circle" alt="User Image"/>
 
                                 <p>
                                 Alexander Pierce - Web Developer

@@ -12,7 +12,7 @@ class LeftSideBar extends React.Component{
                 <section className="sidebar">
                     <div className="user-panel">
                         <div className="pull-left image">
-                            <img className="img-circle" alt="User Image"/>
+                            <img src="/user.jpeg" className="img-circle" alt="User Image"/>
                         </div>
                         <div className="pull-left info">
                             <p>Ralph Largo</p>
