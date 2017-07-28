@@ -1,18 +1,22 @@
 var bookshelf = require('./bookshelf');
 
-var User = bookshelf.Model.extend({
+exports.User = User = bookshelf.Model.extend({
     tableName: 'users',
     info: function () {
         return this.hasOne(UserInfo)
     }
 })
 
-var UserInfo = bookshelf.Model.extend({
+exports.UserInfo = UserInfo = bookshelf.Model.extend({
     tableName: 'user_info',
     user: function () {
         return this.belongsTo(User)
+    },
+    job_title: function(){
+        return this.hasOne(Job,'id','job_id')
     }
 });
 
-exports.User = User;
-exports.UserInfo = UserInfo;
+exports.Job = Job = bookshelf.Model.extend({
+    tableName: 'job_titles',
+})
