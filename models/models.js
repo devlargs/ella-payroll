@@ -13,7 +13,7 @@ exports.UserInfo = UserInfo = bookshelf.Model.extend({
         return this.belongsTo(User)
     },
     job_title: function(){
-        return this.hasOne(Job,'id','job_id')
+        return this.hasOne(Job, 'id', 'job_id')
     }
 });
 

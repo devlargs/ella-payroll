@@ -13,7 +13,34 @@ class App extends React.Component {
         }
     }
 
+    login(){
+        var self = this;
+
+        if(self.state.username == ''){
+            toastr.error('Please enter username.')
+        }else if(self.state.password == ''){
+            toastr.error('Please enter password')
+        }else{
+            $.ajax({
+                url: '/api/authenticate',
+                type: 'POST',
+                data: {
+                    email: self.state.username,
+                    password: self.state.password
+                },
+                success: function(response){
+                    console.log(response)
+                },
+                error: function(err){
+                    toastr.error(err)
+                }
+            })
+        }
+    }
+
     render() {
+        var self = this;
+
         return (
             <div className="login-box">
                 <div className="login-logo">
@@ -22,7 +49,7 @@ class App extends React.Component {
                 <div className="login-box-body">
                     <p className="login-box-msg">Sign in to start your session</p>
 
-                    <form>
+                    <form encType="multipart/form-data">
                         <div className="form-group has-feedback">
                             <input type="email" className="form-control" placeholder="Email" value={this.state.username} onChange={(e) => this.setState({ username: e.target.value })} />
                             <span className="glyphicon glyphicon-envelope form-control-feedback"></span>
@@ -38,7 +65,7 @@ class App extends React.Component {
                         <div className="col-xs-4">
                             {
                                 (!this.state.loginLoading) ?
-                                <button className="btn btn-primary btn-block btn-flat" onClick={() => {location.href = "/dashboard"}}>Sign In </button> :
+                                <button className="btn btn-primary btn-block btn-flat" onClick={() => self.login()}>Sign In </button> :
                                 <ButtonLoad classNames={"btn btn-primary btn-block btn-flat"} />
                             }
                             

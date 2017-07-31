@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "ubuntu": "webpack --watch & nodemon",
+    "ubuntu": "webpack --watch & nodemon server.js",
     "windows": "webpack --watch & nodemon"
   },
   "dependencies": {
@@ -23,6 +23,7 @@
     "express": "~4.15.2",
     "font-awesome": "^4.7.0",
     "jquery": "^3.2.1",
+    "jquery-param": "^0.2.0",
     "knex": "^0.13.0",
     "moment": "^2.18.1",
     "morgan": "~1.8.1",
