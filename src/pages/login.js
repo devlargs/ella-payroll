@@ -29,7 +29,8 @@ class App extends React.Component {
                     password: self.state.password
                 },
                 success: function(response){
-                    console.log(response)
+                    toastr.success(response.message);
+                    localStorage.setItem('$shaEs5i8^7u0L9&a@!iR4a2m', JSON.stringify(response.user));
                 },
                 error: function(err){
                     toastr.error(err)

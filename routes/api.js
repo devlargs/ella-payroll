@@ -12,7 +12,7 @@ router.post('/authenticate', function (req, res, next) {
       bcrypt.compare(req.body.password, response.password, function (err, user) {
         if (user) {
           delete response.password;
-          res.send(response);
+          res.send({user: response, message: 'Successfully Loggedin.'});
         } else {
           res.send({ message: 'Invalid username and password. '});
         }
@@ -24,7 +24,10 @@ router.post('/authenticate', function (req, res, next) {
 })
 
 router.get('/user', function (req, res, next) {
-  api.User.fetchAll({ withRelated: ['info'] }).then(function (response) {
+  // api.User.fetchAll({ withRelated: ['info'] }).then(function (response) {
+  var query = {};
+  
+  api.User.fetchAll(query).then(function (response) {
     res.send({ status: true, response: response });
   }).catch(function (error) {
     res.send({ status: false, error });

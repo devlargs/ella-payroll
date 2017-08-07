@@ -1,5 +1,10 @@
 import React from 'react';
 import { render } from 'react-dom';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import Reducers from './reducers';
+
+let store = createStore(Reducers)
 
 import Navbar from './pages/components/navbar';
 import LeftSideBar from './pages/components/leftSidebar';
@@ -43,7 +48,11 @@ class Main extends React.Component {
 
     render(){
         return (
-            this.conditionalRendering()
+            <Provider store={store}>
+                {
+                    this.conditionalRendering()
+                }
+            </Provider>
         )
     }
 }
