@@ -1,11 +1,11 @@
-const users = (state = [], action) => {
+const users = (state = {}, action) => {
+      console.log(action)
+  
   switch (action.type) {
-    case 'ADD_USER':
+    case 'CURRENT_USER':
       return [
         ...state,
-        {
-          id: action.user,
-        }
+        { currentUser: action.payload }
       ]
     default:
       return state

@@ -4,7 +4,7 @@ import { combineReducers } from 'redux';
 import users from './users';
 
 const Reducers = combineReducers({
-    users
+    users: users
 });
 
 export default Reducers;

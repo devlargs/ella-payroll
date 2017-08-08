@@ -1,6 +1,8 @@
 import React from 'react';
 import { render } from 'react-dom';
 import ButtonLoad from './components/buttonLoading';
+import { connect } from 'react-redux';
+import * as action from '../actions'
 
 class App extends React.Component {
     constructor() {
@@ -30,18 +32,19 @@ class App extends React.Component {
                 },
                 success: function(response){
                     toastr.success(response.message);
+                    self.props.addUser(response.user);
                     localStorage.setItem('$shaEs5i8^7u0L9&a@!iR4a2m', JSON.stringify(response.user));
                 },
                 error: function(err){
                     toastr.error(err)
                 }
-            })
+            });
         }
     }
 
     render() {
         var self = this;
-
+        console.log(self.props)
         return (
             <div className="login-box">
                 <div className="login-logo">
@@ -78,4 +81,11 @@ class App extends React.Component {
     }
 }
 
-module.exports = App;
+// module.exports = App;
+const mapStateToProps = (state) => {
+    return {
+        user: state.users
+    }
+}
+
+module.exports = connect(mapStateToProps, action)(App)
