@@ -33,6 +33,7 @@
     "react-dom": "^15.6.1",
     "react-redux": "^5.0.5",
     "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
     "sequence": "^3.0.0",
     "serve-favicon": "~2.4.2",
     "sweetalert": "^1.1.3",

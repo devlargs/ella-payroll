@@ -1,5 +1,5 @@
 const users = (state = {}, action) => {
-      console.log(action)
+  console.log(action)
   
   switch (action.type) {
     case 'CURRENT_USER':

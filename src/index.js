@@ -1,10 +1,12 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk'
 import Reducers from './reducers';
 
-let store = createStore(Reducers)
+const createStoreWithMiddleware = applyMiddleware(thunk)(createStore)
+// let store = createStore(Reducers)
 
 import Navbar from './pages/components/navbar';
 import LeftSideBar from './pages/components/leftSidebar';
@@ -48,7 +50,7 @@ class Main extends React.Component {
 
     render(){
         return (
-            <Provider store={store}>
+            <Provider store={createStoreWithMiddleware(Reducers)}>
                 {
                     this.conditionalRendering()
                 }

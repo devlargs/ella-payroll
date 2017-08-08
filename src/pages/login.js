@@ -32,7 +32,7 @@ class App extends React.Component {
                 },
                 success: function(response){
                     toastr.success(response.message);
-                    self.props.addUser(response.user);
+                    self.props.setCurrentUser(response.user);
                     localStorage.setItem('$shaEs5i8^7u0L9&a@!iR4a2m', JSON.stringify(response.user));
                 },
                 error: function(err){
@@ -44,7 +44,7 @@ class App extends React.Component {
 
     render() {
         var self = this;
-        console.log(self.props)
+ 
         return (
             <div className="login-box">
                 <div className="login-logo">
@@ -81,11 +81,10 @@ class App extends React.Component {
     }
 }
 
-// module.exports = App;
-const mapStateToProps = (state) => {
+const mapState = (state) => {
     return {
         user: state.users
     }
 }
 
-module.exports = connect(mapStateToProps, action)(App)
+module.exports = connect(mapState, action)(App)

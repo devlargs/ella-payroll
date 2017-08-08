@@ -1,6 +1,6 @@
-export const addUser = (user) => dispatch => {
+export const setCurrentUser = (user) => dispatch => {
     dispatch({
-        type: 'CURRENT_USER',
+        type: 'SET_CURRENT_USER',
         payload: user
     })
 }
