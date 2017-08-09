@@ -12,7 +12,8 @@ router.post('/authenticate', function (req, res, next) {
       bcrypt.compare(req.body.password, response.password, function (err, user) {
         if (user) {
           delete response.password;
-          res.send({ user: response, message: 'Successfully Loggedin.' });
+          req.session.user = response
+          res.redirect('/dashboard');
         } else {
           res.send({ message: 'Invalid username and password. ' });
         }

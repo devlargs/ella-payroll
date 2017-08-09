@@ -10,6 +10,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/dashboard', function(req, res, next){
+  console.log(req.session)
   res.render('index',{
     title: 'Dashboard',
     page: 'dashboard',

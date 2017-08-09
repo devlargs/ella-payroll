@@ -20,6 +20,7 @@ class App extends React.Component {
 
     render() {
         var self = this;
+        
         return (
             <div>
                 <section className="content-header">
@@ -151,7 +152,6 @@ class App extends React.Component {
                             </div>
                         </div>
                     }
-
 
                 </section>
             </div>

@@ -1,8 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
 import ButtonLoad from './components/buttonLoading';
-import { connect } from 'react-redux';
-import * as action from '../actions'
 
 class App extends React.Component {
     constructor() {
@@ -32,8 +30,10 @@ class App extends React.Component {
                 },
                 success: function(response){
                     toastr.success(response.message);
-                    self.props.setCurrentUser(response.user);
                     localStorage.setItem('$shaEs5i8^7u0L9&a@!iR4a2m', JSON.stringify(response.user));
+                    setTimeout(function(){
+                        location.href = "/dashboard"
+                    }, 1500)
                 },
                 error: function(err){
                     toastr.error(err)
@@ -81,10 +81,4 @@ class App extends React.Component {
     }
 }
 
-const mapState = (state) => {
-    return {
-        user: state.users
-    }
-}
-
-module.exports = connect(mapState, action)(App)
+module.exports = App;

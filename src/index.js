@@ -1,12 +1,5 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk'
-import Reducers from './reducers';
-
-const createStoreWithMiddleware = applyMiddleware(thunk)(createStore)
-// let store = createStore(Reducers)
 
 import Navbar from './pages/components/navbar';
 import LeftSideBar from './pages/components/leftSidebar';
@@ -24,7 +17,6 @@ switch(__page){
         var App = require('./pages/admin/employees');
         break;
 }
-
 
 class Main extends React.Component {
     conditionalRendering(){
@@ -49,13 +41,7 @@ class Main extends React.Component {
     }
 
     render(){
-        return (
-            <Provider store={createStoreWithMiddleware(Reducers)}>
-                {
-                    this.conditionalRendering()
-                }
-            </Provider>
-        )
+        return this.conditionalRendering()
     }
 }
 
