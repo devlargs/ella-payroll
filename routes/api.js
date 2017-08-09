@@ -12,8 +12,8 @@ router.post('/authenticate', function (req, res, next) {
       bcrypt.compare(req.body.password, response.password, function (err, user) {
         if (user) {
           delete response.password;
-          req.session.user = response
-          res.redirect('/dashboard');
+          req.session.user = encodeURIComponent(JSON.stringify(response));
+          res.send({ user: response, message: 'Successfully logged in.'});
         } else {
           res.send({ message: 'Invalid username and password. ' });
         }
@@ -26,9 +26,11 @@ router.post('/authenticate', function (req, res, next) {
 
 router.get('/user', function (req, res, next) {
   // api.User.fetchAll({ withRelated: ['info'] }).then(function (response) {
-  var query = {};
+  var query = { withRelated: ['info', 'job_title']};
 
-  api.User.fetchAll(query).then(function (response) {
+  api.User.fetchAll({ 
+    withRelated: req.query.withRelated.split('.') 
+  }).then(function (response) {
     res.send({ status: true, response: response });
   }).catch(function (error) {
     res.send({ status: false, error });
@@ -36,7 +38,9 @@ router.get('/user', function (req, res, next) {
 });
 
 router.get('/user/:id', function (req, res, next) {
-  api.UserInfo.where({ id: req.params.id }).fetch({ withRelated: ['user', 'job_title'] }).then(function (response) {
+  api.UserInfo.where({ id: req.params.id }).fetchAll({ 
+    withRelated: req.query.withRelated.split('.') 
+  }).then(function (response) {
     res.send({ status: true, response });
   }).catch(function (error) {
     res.send({ status: false, error: error });

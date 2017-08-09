@@ -27,6 +27,8 @@
 <script type="text/javascript" src="/jquery-param/jquery-param.min.js"></script>
 <script>
   var __page = '<%= page %>';
+  var __user = '<%= user %>';
+  __user = JSON.parse(decodeURIComponent(__user));
   toastr.options.preventDuplicates = true;
 </script>
 <script src="./script.min.js"></script>

@@ -1,12 +1,27 @@
 import React from 'react';
+import { decrypt } from './functions';
 
 class LeftSideBar extends React.Component{
+    constructor(){
+        super();
+
+        this.state = {
+            user: { 
+                first_name: '',
+                last_name: '',
+                middle_name: ''
+            }
+        }
+    }
+
     componentDidMount(){
         var element = document.getElementById("li-" + __page);
         element.classList.add("active");
+        this.setState({ user: decrypt('currentUser') })
     }
 
     render(){
+        let { user } = this.state;
         return (
             <aside className="main-sidebar">
                 <section className="sidebar">
@@ -15,7 +30,7 @@ class LeftSideBar extends React.Component{
                             <img src="/user.jpeg" className="img-circle" alt="User Image"/>
                         </div>
                         <div className="pull-left info">
-                            <p>Ralph Largo</p>
+                            <p>{user.first_name} {user.middle_name} {user.last_name}</p>
                             <a href="#"><i className="fa fa-circle text-success"></i> Online</a>
                         </div>
                     </div>

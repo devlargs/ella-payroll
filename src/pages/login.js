@@ -21,6 +21,7 @@ class App extends React.Component {
         }else if(self.state.password == ''){
             toastr.error('Please enter password')
         }else{
+            self.setState({ loginLoading : true });
             $.ajax({
                 url: '/api/authenticate',
                 type: 'POST',
@@ -30,12 +31,12 @@ class App extends React.Component {
                 },
                 success: function(response){
                     toastr.success(response.message);
-                    localStorage.setItem('$shaEs5i8^7u0L9&a@!iR4a2m', JSON.stringify(response.user));
                     setTimeout(function(){
                         location.href = "/dashboard"
                     }, 1500)
                 },
                 error: function(err){
+                    self.setState({ loginLoading: false });
                     toastr.error(err)
                 }
             });
