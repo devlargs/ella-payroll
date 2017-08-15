@@ -4,7 +4,7 @@ var api = require('../models/models');
 var bcrypt = require('bcrypt');
 
 router.get('/', function (req, res, next) {
-  res.send({ g: 1 })
+  res.send({ try: 1})
 })
 
 router.post('/authenticate', function (req, res, next) {
@@ -47,5 +47,13 @@ router.get('/user/:id', function (req, res, next) {
     res.send({ status: false, error: 'Mismatch key' });
   });
 });
+
+router.delete('/user/:id', function(req, res, next){
+  api.User.where({ id: req.params.id}).destroy().then(function(response){
+    res.send({ status: true, message: 'Successfully deleted user.'})
+  }).catch(function(err){
+    res.send({ status: false, message: 'Encountered error in deleting user.'})
+  })
+})
 
 module.exports = router;

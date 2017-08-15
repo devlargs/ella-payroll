@@ -21,15 +21,16 @@ class App extends React.Component {
 
         this.list = this.list.bind(this);
         this.editUser = this.editUser.bind(this);
+        this.remove = this.remove.bind(this);
     }
 
     componentDidMount() {
         this.list();
     }
 
-    editUser(id){
+    editUser(id) {
         var self = this;
-        self.setState({ view: 'edit', currentUser: id})
+        self.setState({ view: 'edit', currentUser: id })
     }
 
     list() {
@@ -47,6 +48,41 @@ class App extends React.Component {
         })
     }
 
+    remove(id) {
+        var self = this;
+
+        swal({
+            title: "Are you sure you want to delete this employee?",
+            text: "You wont be able to recover any record of this user!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, delete!",
+            cancelButtonText: "Cancel!",
+            closeOnConfirm: true,
+            closeOnCancel: false
+        }, function (isConfirm) {
+                if (isConfirm) {
+                    $.ajax({
+                        url: '/api/user/' + id,
+                        type: 'DELETE',
+                        success: function (data) {
+                            var updatedUsers = self.state.users;
+                            delete updatedUsers[id]
+                            if (data.status) {
+                                toastr.success(data.message)
+                                self.setState({ users: updatedUsers })
+                            } else {
+                                toastr.error(data.message)
+                            }
+                        }
+                    })
+                } else {
+                    swal("Cancelled", "Think twice before removing user next time.", "error");
+                }
+        });
+    }
+
     render() {
         var self = this;
 
@@ -59,6 +95,12 @@ class App extends React.Component {
                             {
                                 (self.state.view == 'view') &&
                                 <a onClick={() => { this.setState({ view: 'add' }) }}>+Add new </a>
+                            }
+
+                            {
+                                (self.state.view == 'edit') &&
+                                <a onClick={() => { this.setState({ view: 'view' }) }}>-View List
+                                </a>
                             }
 
                         </small>
@@ -108,26 +150,26 @@ class App extends React.Component {
 
                                                 {
                                                     (Object.keys(self.state.users).length) ?
-                                                        Object.keys(self.state.users).map(function(key, index){
+                                                        Object.keys(self.state.users).map(function (key, index) {
                                                             return (
                                                                 <tr key={index}>
                                                                     <td>{self.state.users[key].email}</td>
                                                                     <td>{self.state.users[key].info.first_name + ' ' + self.state.users[key].info.last_name}</td>
                                                                     <td>
-                                                                        <button class="btn btn-success btn-xs btn-mr-5" onClick={() => self.editUser(self.state.users[key].id)}>Edit</button>
-                                                                        <button class="btn btn-danger btn-xs">Remove</button>
+                                                                        <button class="btn btn-success btn-xs btn-mr-5" onClick={() => self.editUser(key)}>Edit</button>
+                                                                        <button class="btn btn-danger btn-xs" onClick={() => self.remove(key)}>Remove</button>
                                                                     </td>
                                                                 </tr>
                                                             )
                                                         })
-                                                    :
-                                                    <tr>
-                                                        <td colSpan="3">
-                                                            <center>
-                                                                <h3>No users found</h3>
-                                                            </center>
-                                                        </td>
-                                                    </tr>
+                                                        :
+                                                        <tr>
+                                                            <td colSpan="3">
+                                                                <center>
+                                                                    <h3>No users found</h3>
+                                                                </center>
+                                                            </td>
+                                                        </tr>
                                                 }
                                             </tbody>
                                         </table>
@@ -199,7 +241,7 @@ class App extends React.Component {
 
                     {
                         (self.state.view == 'edit') &&
-                        <Profile id={self.state.currentUser}/>
+                        <Profile id={self.state.currentUser} />
                     }
 
                 </section>
