@@ -1,8 +1,8 @@
 import React from 'react';
-import { render } from 'react-dom';
 import ButtonLoad from '../components/buttonLoading';
 import TableLoading from '../components/tableLoading';
 import _ from 'lodash';
+import Profile from './profile';
 
 class App extends React.Component {
     constructor() {
@@ -15,25 +15,33 @@ class App extends React.Component {
             password: '',
             firstName: '',
             lastName: '',
+            currentUser: false,
             usersLoading: true
         }
 
         this.list = this.list.bind(this);
+        this.editUser = this.editUser.bind(this);
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.list();
     }
 
-    list(){
+    editUser(id){
+        var self = this;
+        self.setState({ view: 'edit', currentUser: id})
+    }
+
+    list() {
         var self = this;
 
         $.ajax({
             url: '/api/user',
-            success: function(data){
-                self.setState({ users: _.keyBy(data.response, 'id')})    
+            success: function (data) {
+                self.setState({ users: _.keyBy(data.response, 'id'), usersLoading: false })
             },
-            error: function(err){
+            error: function (err) {
+                self.setState({ usersLoading: true })
                 toastr.error('Error on getting employee details. Please try restarting your browser.', '', 5000)
             }
         })
@@ -87,16 +95,40 @@ class App extends React.Component {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                            {
-                                                (self.state.usersLoading) && 
-                                                 <tr>
-                                                    <td colSpan={3}>
-                                                        <center>
-                                                            <h3><span class="fa fa-spinner fa-spin"></span></h3>
-                                                        </center>
-                                                    </td>
-                                                </tr> 
-                                            }
+                                                {
+                                                    (self.state.usersLoading) &&
+                                                    <tr>
+                                                        <td colSpan={3}>
+                                                            <center>
+                                                                <h3><span class="fa fa-spinner fa-spin"></span></h3>
+                                                            </center>
+                                                        </td>
+                                                    </tr>
+                                                }
+
+                                                {
+                                                    (Object.keys(self.state.users).length) ?
+                                                        Object.keys(self.state.users).map(function(key, index){
+                                                            return (
+                                                                <tr key={index}>
+                                                                    <td>{self.state.users[key].email}</td>
+                                                                    <td>{self.state.users[key].info.first_name + ' ' + self.state.users[key].info.last_name}</td>
+                                                                    <td>
+                                                                        <button class="btn btn-success btn-xs btn-mr-5" onClick={() => self.editUser(self.state.users[key].id)}>Edit</button>
+                                                                        <button class="btn btn-danger btn-xs">Remove</button>
+                                                                    </td>
+                                                                </tr>
+                                                            )
+                                                        })
+                                                    :
+                                                    <tr>
+                                                        <td colSpan="3">
+                                                            <center>
+                                                                <h3>No users found</h3>
+                                                            </center>
+                                                        </td>
+                                                    </tr>
+                                                }
                                             </tbody>
                                         </table>
                                     </div>
@@ -130,7 +162,7 @@ class App extends React.Component {
                                                 </div>
                                             </div>
 
-                                            <hr/>
+                                            <hr />
 
                                             <div className="form-group">
                                                 <label htmlFor="firstName" className="col-sm-2 control-label">First Name</label>
@@ -154,15 +186,20 @@ class App extends React.Component {
 
                                             {
                                                 (!self.state.usersLoading) ?
-                                                <button onClick={(e) => self.createUser(e)} className="btn btn-info pull-right">Create Employee</button>:
-                                                <ButtonLoad classNames={"btn btn-info pull-right"}/>
+                                                    <button onClick={(e) => self.createUser(e)} className="btn btn-info pull-right">Create Employee</button> :
+                                                    <ButtonLoad classNames={"btn btn-info pull-right"} />
                                             }
-                                            
+
                                         </div>
                                     </form>
                                 </div>
                             </div>
                         </div>
+                    }
+
+                    {
+                        (self.state.view == 'edit') &&
+                        <Profile id={self.state.currentUser}/>
                     }
 
                 </section>
