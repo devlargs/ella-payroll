@@ -89,13 +89,13 @@ class App extends React.Component {
                                             <tbody>
                                             {
                                                 (self.state.usersLoading) && 
-                                                {/* <tr>
+                                                 <tr>
                                                     <td colSpan={3}>
                                                         <center>
                                                             <h3><span class="fa fa-spinner fa-spin"></span></h3>
                                                         </center>
                                                     </td>
-                                                </tr> */}
+                                                </tr> 
                                             }
                                             </tbody>
                                         </table>
