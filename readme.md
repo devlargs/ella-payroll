@@ -1,3 +1,3 @@
-Upon pushing to heroku add this to the package.json script
+Functions
 
-"postinstall": "NODE_ENV=production webpack -p"
+decrypt -> returns any hashed string on localstorage.

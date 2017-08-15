@@ -3,6 +3,10 @@ var router = express.Router();
 var api = require('../models/models');
 var bcrypt = require('bcrypt');
 
+router.get('/', function (req, res, next) {
+  res.send({ g: 1 })
+})
+
 router.post('/authenticate', function (req, res, next) {
   api.User.where({ email: req.body.email }).fetch().then(function (response) {
     if (!response) {
@@ -13,7 +17,7 @@ router.post('/authenticate', function (req, res, next) {
         if (user) {
           delete response.password;
           req.session.user = encodeURIComponent(JSON.stringify(response));
-          res.send({ user: response, message: 'Successfully logged in.'});
+          res.send({ user: response, message: 'Successfully logged in.' });
         } else {
           res.send({ message: 'Invalid username and password. ' });
         }
@@ -25,25 +29,22 @@ router.post('/authenticate', function (req, res, next) {
 })
 
 router.get('/user', function (req, res, next) {
-  // api.User.fetchAll({ withRelated: ['info'] }).then(function (response) {
-  var query = { withRelated: ['info', 'job_title']};
-
-  api.User.fetchAll({ 
-    withRelated: req.query.withRelated.split('.') 
-  }).then(function (response) {
-    res.send({ status: true, response: response });
-  }).catch(function (error) {
-    res.send({ status: false, error });
-  });
-});
+  api.User.fetchAll({ withRelated: ['info'] }).then(function (key) {
+    res.send({ response: key, status: true })
+  }).catch(function (err) {
+    res.send({ error: err, status: false })
+  })
+})
 
 router.get('/user/:id', function (req, res, next) {
-  api.UserInfo.where({ id: req.params.id }).fetchAll({ 
-    withRelated: req.query.withRelated.split('.') 
-  }).then(function (response) {
+  var query = {};
+
+  query.withRelated = (req.query.withRelated) ? req.query.withRelated.split(".") : [];
+
+  api.UserInfo.where({ id: req.params.id }).fetchAll(query).then(function (response) {
     res.send({ status: true, response });
   }).catch(function (error) {
-    res.send({ status: false, error: error });
+    res.send({ status: false, error: 'Mismatch key' });
   });
 });
 

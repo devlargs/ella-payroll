@@ -34,10 +34,12 @@ class  Navbar extends React.Component {
     }
 
     signOut(){
-        toastr.success("<h5>Thank you. Please come again. <span class='fa fa-spin fa-gear'></span></h5>");
-        setTimeout(function(){
+        // uncomment when app is ready
+        
+        // toastr.success("<h5>Thank you. Please come again. <span class='fa fa-spin fa-gear'></span></h5>");
+        // setTimeout(function(){
             location.href = "/logout";
-        }, 3500);
+        // }, 1000);
     }
     
     render(){

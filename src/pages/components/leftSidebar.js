@@ -47,13 +47,13 @@ class LeftSideBar extends React.Component{
                             <a href="/employees"><i className="fa fa-user"></i> <span>Employees</span></a>
                         </li>
                         
-                        <li id="li-calendar">
+                        {/* <li id="li-calendar">
                             <a href="/calendar"><i className="fa fa-calendar"></i> <span>Calendar</span></a>
-                        </li>
+                        </li> */}
                         
-                        <li id="li-taxTable">
+                        {/* <li id="li-taxTable">
                             <a href="/taxTable"><i className="fa fa-table"></i> <span>Tax Table</span></a>
-                        </li>
+                        </li> */}
                     </ul>
                 </section>
             </aside>

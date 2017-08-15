@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import ButtonLoad from '../components/buttonLoading';
 import TableLoading from '../components/tableLoading';
+import _ from 'lodash';
 
 class App extends React.Component {
     constructor() {
@@ -16,6 +17,26 @@ class App extends React.Component {
             lastName: '',
             usersLoading: true
         }
+
+        this.list = this.list.bind(this);
+    }
+
+    componentDidMount(){
+        this.list();
+    }
+
+    list(){
+        var self = this;
+
+        $.ajax({
+            url: '/api/user',
+            success: function(data){
+                self.setState({ users: _.keyBy(data.response, 'id')})    
+            },
+            error: function(err){
+                toastr.error('Error on getting employee details. Please try restarting your browser.', '', 5000)
+            }
+        })
     }
 
     render() {
@@ -58,33 +79,24 @@ class App extends React.Component {
                                     </div>
                                     <div className="box-body table-responsive no-padding">
                                         <table className="table table-bordered">
-                                            <tbody>
-                                            
+                                            <thead>
                                                 <tr>
                                                     <th>Email</th>
                                                     <th>Employee Name</th>
                                                     <th>Actions</th>
                                                 </tr>
-                                                {
-                                                    (self.state.usersLoading) ?
-                                                    <TableLoading colSpan={3}/> : 
-
-                                                    (Object.keys(self.state.users).length == 0) ?
-                                                    <TableLoading colSpan={3} message={"No users found"} /> :
-                                                    Object.keys(self.state.users).map(function(key, idx){
-                                                        return (
-                                                            <tr key={idx}>
-                                                                <td>{self.state.users[key].email}</td> 
-                                                                <td>{self.state.users[key].displayName}</td>
-                                                                <td>
-                                                                    <button className="btn btn-mr-5 btn-success btn-xs">View</button> 
-                                                                    <button onClick={(e) => self.removeUser(e, key, self.state.users[key].email)} className="btn btn-mr-5 btn-danger btn-xs">Remove</button> 
-                                                                </td>
-                                                            </tr>
-                                                        )
-                                                    })
-                                                }
-                                                
+                                            </thead>
+                                            <tbody>
+                                            {
+                                                (self.state.usersLoading) && 
+                                                {/* <tr>
+                                                    <td colSpan={3}>
+                                                        <center>
+                                                            <h3><span class="fa fa-spinner fa-spin"></span></h3>
+                                                        </center>
+                                                    </td>
+                                                </tr> */}
+                                            }
                                             </tbody>
                                         </table>
                                     </div>

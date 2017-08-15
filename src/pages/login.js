@@ -11,6 +11,16 @@ class App extends React.Component {
             password: '',
             loginLoading: false
         }
+
+        this.login = this.login.bind(this);
+        this.handleKeyPress = this.handleKeyPress.bind(this);
+    }
+
+    handleKeyPress(event){
+        var self = this;
+        if(event.key == 'Enter'){
+            self.login();
+        }
     }
 
     login(){
@@ -56,11 +66,11 @@ class App extends React.Component {
 
                     <form encType="multipart/form-data">
                         <div className="form-group has-feedback">
-                            <input type="email" className="form-control" placeholder="Email" value={this.state.username} onChange={(e) => this.setState({ username: e.target.value })} />
+                            <input type="email" className="form-control" placeholder="Email" value={this.state.username} onChange={(e) => this.setState({ username: e.target.value })} onKeyPress={self.handleKeyPress} />
                             <span className="glyphicon glyphicon-envelope form-control-feedback"></span>
                         </div>
                         <div className="form-group has-feedback">
-                            <input type="password" className="form-control" value={this.state.password} placeholder="Password" onChange={(e) => this.setState({ password: e.target.value })} />
+                            <input type="password" className="form-control" value={this.state.password} placeholder="Password" onChange={(e) => this.setState({ password: e.target.value })} onKeyPress={self.handleKeyPress}/>
                             <span className="glyphicon glyphicon-lock form-control-feedback"></span>
                         </div>
                     </form>
