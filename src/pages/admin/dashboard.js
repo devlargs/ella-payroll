@@ -11,6 +11,7 @@ class App extends React.Component {
     }
 
     render() {
+        console.clear();
         var self = this;
         return (
             <div>

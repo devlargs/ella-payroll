@@ -138,17 +138,15 @@ class App extends React.Component {
                                             </thead>
                                             <tbody>
                                                 {
-                                                    (self.state.usersLoading) &&
+                                                    (self.state.usersLoading) ?
                                                     <tr>
                                                         <td colSpan={3}>
                                                             <center>
                                                                 <h3><span class="fa fa-spinner fa-spin"></span></h3>
                                                             </center>
                                                         </td>
-                                                    </tr>
-                                                }
-
-                                                {
+                                                    </tr> :
+                                                
                                                     (Object.keys(self.state.users).length) ?
                                                         Object.keys(self.state.users).map(function (key, index) {
                                                             return (

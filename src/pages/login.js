@@ -40,10 +40,15 @@ class App extends React.Component {
                     password: self.state.password
                 },
                 success: function(response){
-                    toastr.success(response.message);
-                    setTimeout(function(){
-                        location.href = "/dashboard"
-                    }, 1500)
+                    if(response.status){
+                        toastr.success(response.message);
+                        setTimeout(function(){
+                            location.href = "/dashboard"
+                        }, 1500)
+                    }else{
+                        toastr.error(response.message);
+                        self.setState({ loginLoading: false });
+                    }
                 },
                 error: function(err){
                     self.setState({ loginLoading: false });
