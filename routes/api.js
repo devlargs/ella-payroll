@@ -5,7 +5,7 @@ var bcrypt = require('bcrypt');
 var Sequence = require('sequence').Sequence;
 
 router.get('/', function (req, res, next) {
-
+  
 })
 
 router.post('/authenticate', function (req, res, next) {
@@ -54,19 +54,42 @@ router.get('/user/:id', function (req, res, next) {
 });
 
 router.post('/user', function (req, res, next) {
-  // Sequence.create().then(function (next) {
-  //   bcrypt.hash(req.body.email, 0).then(function (hashed) {
-  //     next(hashed)
-  //   }).catch(function (err) {
-  //     res.send({ status: false, error: err })
-  //   });
-  // }).then(function (next, hashed) {
-  //   api.User.forge({ email: req.body.email, password: hashed }).save().then(function (response) {
-  //     res.send({ response: response })
-  //   }).catch(function (err) {
-  //     res.send({ err: err, status: false })
-  //   });
-  // });
+  Sequence.create().then(function (next) {
+    var salt = bcrypt.genSaltSync(0);
+    var hashed = bcrypt.hashSync(req.body.email, salt);
+    next(hashed);
+  }).then(function (next, hashed) {
+    api.User.forge({ email: req.body.email, password: hashed }).save().then(function (response) {
+      // res.send({ response: response })
+      next(response)
+    }).catch(function (err) {
+      res.send({ err: err, status: false })
+    });
+  }).then(function(next, response){
+    var body = {
+      user_id: response.id, 
+      first_name: 'TEST',
+      middle_name: 'TEST',
+      last_name: 'TEST',
+      username: 'TEST',
+      job_id: 2,
+      address: '',
+      contact: '09467015762',
+      photo: '',
+      shift_schedule: '9:00AM-6:00PM',
+      day_off: "Saturday,Sunday",
+      grace_period: 30,
+      gender: 'M',
+      leaves: 0,
+      type: 0
+    }
+
+    api.UserInfo.forge(body).save().then(function(response2){
+      res.send({ response: response2, status: true })
+    }).catch(function(err){
+      res.send({status: false, message: 'Error on creating user.', err: err})
+    })
+  })
 });
 
 router.delete('/user/:id', function (req, res, next) {
